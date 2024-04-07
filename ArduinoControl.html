@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Traffic Light Control</title>
+    <style>
+        body { text-align: center;}
+        input[type=checkbox] { vertical-align: middle; position: relative;bottom: 1px; }
+        label { display: block; }
+
+    </style>
+</head>
+<body>
+<div>
+    <div>
+        <h2> Traffic Light Toggle </h2>
+        <form>
+            <label>
+                <input id="redInput" type="checkbox">
+                Red
+            </label>
+            <label>
+                <input id="orangeInput" type="checkbox">
+                Orange
+            </label>
+            <label>
+                <input id="greenInput" type="checkbox">
+                Green
+            </label>
+        </form>
+
+        <br>
+        <button id="update">UPDATE</button>
+        <br>
+</div>
+
+<script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-app.js";
+    // TODO: Add SDKs for Firebase products that you want to use
+    // https://firebase.google.com/docs/web/setup#available-libraries
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyCsos9ZTfU0ribgqpQXBqMS-Gb0xCw3Ghw",
+      authDomain: "iot-traffic-light-demo.firebaseapp.com",
+      databaseURL: "https://iot-traffic-light-demo-default-rtdb.firebaseio.com",
+      projectId: "iot-traffic-light-demo",
+      storageBucket: "iot-traffic-light-demo.appspot.com",
+      messagingSenderId: "96262831399",
+      appId: "1:96262831399:web:5752ec9b256a3293443d02"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+
+    import {getDatabase, set, get, update, remove, ref, child}
+    from "https://www.gstatic.com/firebasejs/10.10.0/firebase-database.js";
+
+    const db = getDatabase();
+
+    var redInput = document.querySelector("#redInput");
+    var orangeInput = document.querySelector("#orangeInput");
+    var greenInput = document.querySelector("#greenInput");
+
+    var updateBtn = document.querySelector("#update");
+    var insertBtn = document.querySelector("#insert");
+
+    function updateData() {
+        update(ref(db, "Traffic/"), {
+            RED: redInput.checked,
+            ORANGE: orangeInput.checked,
+            GREEN: greenInput.checked
+        })
+        .then(()=>{
+            alert("Updated!");
+        })
+        .catch((error)=>{
+            alert(error);
+        });
+    }
+
+    updateBtn.addEventListener('click', updateData)
+
+</script>
+
+
+</body>
+</html>
